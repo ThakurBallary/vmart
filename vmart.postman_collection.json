@@ -1,0 +1,524 @@
+{
+	"info": {
+		"_postman_id": "ec679c48-ff01-4d02-b8e6-4982fd33fb95",
+		"name": "vmart",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "get-token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const $ = cheerio.load(pm.response.text())\r",
+									"pm.environment.set('_csrf', $('input')[2].attribs.value)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('userId', 2);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "Uma",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "default"
+								},
+								{
+									"key": "_csrf",
+									"value": "{{_csrf}}",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_csrf",
+									"value": "{{_csrf}}",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/logout",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vegetable",
+			"item": [
+				{
+					"name": "add-vegetable",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "{{_csrf}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tomatos\",\r\n    \"unitPrice\": 20,\r\n    \"availableQuantity\": 100,\r\n    \"sellerId\": {{userId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/add-vegetable",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"add-vegetable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-vegetables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/get-vegetables",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"get-vegetables"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-vegetable",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "{{_csrf}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 3,\r\n    \"name\": \"Beans\",\r\n    \"unitPrice\": 50,\r\n    \"availableQuantity\": 15,\r\n    \"sellerId\": {{userId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/update-vegetable",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"update-vegetable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-vegetable",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "{{_csrf}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tomatos\",\r\n    \"unitPrice\": 20,\r\n    \"availableQuantity\": 100,\r\n    \"sellerId\": {{userId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/delete-vegetable?id=4",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"delete-vegetable"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "add-to-cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "{{_csrf}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 2,\r\n    \"vegetableId\": 1,\r\n    \"buyerId\": {{userId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/add-to-cart",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"add-to-cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-cart-items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/get-cart-items?userId={{userId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"get-cart-items"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-cart-item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "{{_csrf}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"quantity\": 2,\r\n    \"vegetableId\": 1,\r\n    \"buyerId\": {{userId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/update-cart-item",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"update-cart-item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove-from-cart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "{{_csrf}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/remove-from-cart?id=2",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"remove-from-cart"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "empty-cart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "{{_csrf}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/empty-cart?userId={{userId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"empty-cart"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "create-order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "{{_csrf}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"buyerId\": {{userId}},\r\n  \"fromCart\": false,\r\n  \"orderItems\": [\r\n    {\r\n      \"quantity\": 4,\r\n      \"vegetableId\": 3\r\n    }\r\n  ],\r\n  \"paid\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/create-order",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"create-order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/get-orders?userId={{userId}}",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"get-orders"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order-items",
+			"item": [
+				{
+					"name": "get-order-items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/get-order-items?orderId=1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"get-order-items"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
